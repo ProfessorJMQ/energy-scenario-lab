@@ -1,4 +1,6 @@
 import unittest
+import tempfile
+from pathlib import Path
 from dataclasses import replace
 import numpy as np
 from energy_lab import Assets, Profiles, dispatch, synthetic_profiles
@@ -68,6 +70,13 @@ class ModelTests(unittest.TestCase):
             dispatch(flat([10], [1.1]), Assets())
         with self.assertRaises(ValueError):
             synthetic_profiles(1, outage=(23, 25))
+
+    def test_report_handles_zero_critical_load(self):
+        from energy_lab.cli import run
+        with tempfile.TemporaryDirectory() as directory:
+            report = run(directory, days=1, custom={"critical_fraction": 0})
+            self.assertIsNone(report["outage"]["scenarios"]["grid_only"]["outage_critical_served_fraction"])
+            self.assertIn("| n/a |", (Path(directory) / "RESULTS.md").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

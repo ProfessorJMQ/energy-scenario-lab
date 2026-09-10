@@ -78,7 +78,9 @@ def run(output, days=7, seed=42, custom=None, sweep=False):
               "| Scenario | Critical load served (%) | Noncritical load shed (kWh) | Fuel (L) |", "| --- | ---: | ---: | ---: |"]
     for name, result in outage_results.items():
         m = result.metrics
-        lines.append(f"| {name} | {100 * m['outage_critical_served_fraction']:.1f} | {m['shed_noncritical_kwh']:.1f} | {m['fuel_liters']:.1f} |")
+        fraction = m['outage_critical_served_fraction']
+        served_percent = f"{100 * fraction:.1f}" if fraction is not None else "n/a"
+        lines.append(f"| {name} | {served_percent} | {m['shed_noncritical_kwh']:.1f} | {m['fuel_liters']:.1f} |")
     lines += ["", "## Interpretation boundaries", "",
               "These are outputs of a transparent dispatch heuristic, not measured performance or optimal designs. "
               "One demand charge is applied to the observed peak even for this short horizon. "
