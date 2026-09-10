@@ -1,0 +1,15 @@
+# Local development only
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+outputs/
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+node_modules/
+.sites-runtime/
+*.log

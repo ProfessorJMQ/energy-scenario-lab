@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "energy-scenario-lab"
+version = "0.1.0"
+description = "Reproducible synthetic energy scenarios, dispatch, and sensitivity studies"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.26,<3", "matplotlib>=3.8,<4"]
+
+[project.scripts]
+energy-lab = "energy_lab.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
